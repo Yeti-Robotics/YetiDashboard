@@ -48,7 +48,7 @@ function setLogin() {
   address.disabled = connect.disabled = false;
   connect.textContent = 'Connect';
   // Add the default address and select xxxx
-  address.value = 'roborio-3506-frc.local';
+  address.value = '10.35.6.2';
   address.focus();
   address.setSelectionRange(8, 12);
 }

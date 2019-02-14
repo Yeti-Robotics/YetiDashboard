@@ -13,10 +13,6 @@ let ui = {
     robotDiagram: {
         arm: document.getElementById('robot-arm')
     },
-    example: {
-        button: document.getElementById('example-button'),
-        readout: document.getElementById('example-readout').firstChild
-    },
     autoSelect: document.getElementById('auto-select'),
     armPosition: document.getElementById('arm-position')
 };
@@ -51,13 +47,6 @@ NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
     ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg)`;
 });
 
-// This button is just an example of triggering an event on the robot by clicking a button.
-NetworkTables.addKeyListener('/SmartDashboard/example_variable', (key, value) => {
-    // Set class active if value is true and unset it if it is false
-    ui.example.button.classList.toggle('active', value);
-    ui.example.readout.data = 'Value is ' + value;
-});
-
 NetworkTables.addKeyListener('/robot/time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
     // We assume here that value is an integer representing the number of seconds left.
@@ -85,11 +74,11 @@ NetworkTables.addKeyListener('/SmartDashboard/autonomous/selected', (key, value)
     ui.autoSelect.value = value;
 });
 
-// The rest of the doc is listeners for UI elements being clicked on
-ui.example.button.onclick = function() {
-    // Set NetworkTables values to the opposite of whether button has active class.
-    NetworkTables.putValue('/SmartDashboard/example_variable', this.className != 'active');
-};
+// // The rest of the doc is listeners for UI elements being clicked on
+// ui.example.button.onclick = function() {
+//     // Set NetworkTables values to the opposite of whether button has active class.
+//     NetworkTables.putValue('/SmartDashboard/example_variable', this.className != 'active');
+// };
 // Reset gyro value to 0 on click
 ui.gyro.container.onclick = function() {
     // Store previous gyro val, will now be subtracted from val for callibration
@@ -105,7 +94,6 @@ ui.autoSelect.onchange = function() {
 ui.armPosition.oninput = function() {
     NetworkTables.putValue('/SmartDashboard/arm/encoder', parseInt(this.value));
 };
-
 addEventListener('error',(ev)=>{
     ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})
 })

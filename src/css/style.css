@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    margin: 0;
+    mrgin: 0;
     padding: 0;
 }
 ::-webkit-scrollbar {
@@ -21,12 +21,12 @@ button, input[type="text"], input[type="number"], .select-container, select {
     background: #444;
     border: none;
     font-size: 14px;
-    padding: 6px 8px;
+    padding: 4px 4px;
     cursor: pointer;
     outline: 0;
 }
 .select-container {
-    padding: 0;
+    padding: 5px 5px 10px 5px;
     display: inline-block;
 }
 select {
@@ -159,4 +159,24 @@ body.login #login {
 }
 #login > button {
     margin-left: 5px;
+}
+.sensor {
+    background-color: #54B6E5;
+    padding: 0.5px 4px;
+    border-radius: 5px;
+
+}
+.wtext {
+    color: white;
+}
+span {
+    color: #333;
+}
+#true {
+    background-color: green; 
+    color: green;
+}
+#false {
+    background-color: red;
+    color: red;  
 }

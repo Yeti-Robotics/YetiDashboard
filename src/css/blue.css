@@ -1,0 +1,19 @@
+body,
+header,
+button,
+input[type="text"],
+input[type="number"],
+.select-container,
+select {
+    color: #54B6E5;
+}
+svg *:not(text) {
+    stroke: #54B6E5;
+}
+text {
+    fill: #54B6E5;
+}
+input[type="checkbox"] {
+    -webkit-filter: saturate(1);
+    filter: saturate(1);
+}

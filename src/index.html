@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <title>FRC Dashboard</title>
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/blue.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -19,43 +21,70 @@
     <div id="camera"></div>
     <!-- The main body of the dashboard, by default contains the gyro monitor and the robot diagram -->
     <article>
-        <!-- Gyroscope -->
-        <svg id="gyro">
-            <circle cx="85" cy="85" r="83"></circle>
-            <circle cx="85" cy="85" r="50"></circle>
-            <rect id="gyro-arm" x="80" y="5" width="10" height="80"></rect>
-            <text id="gyro-number" x="90" y="115">0º</text>
-        </svg>
-        <!-- Example robot diagram, arm moves when encoder value changes -->
-        <svg id="robot-diagram" width="332" height="450">
-            <text x="40" y="340">Example SVG Robot Diagram</text>
-            <rect x="75" y="360" width="230" height="40"></rect>
-            <rect x="85" y="370" width="210" height="40"></rect>
-            <rect id="robot-arm" x="5" y="375" width="80" height="10"></rect>
-            <circle cx="100" cy="410" r="25"></circle>
-            <circle cx="260" cy="410" r="25"></circle>
-            <rect x="60" y="380" width="250" height="30"></rect>
-            <text id="team" x="185" y="405" text-anchor="middle">####</text>
-        </svg>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <!-- Gyroscope -->
+                    <svg id="gyro">
+                        <circle cx="85" cy="85" r="83"></circle>
+                        <circle cx="85" cy="85" r="50"></circle>
+                        <rect id="gyro-arm" x="80" y="5" width="10" height="80"></rect>
+                        <text id="gyro-number" x="90" y="115">0º</text>
+                    </svg>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><p class="wtext">Line Sensor 1: <span class="sensor" id="false">-----</span></p></div>
+                <div class="col-sm-4"><p class="wtext">Line Sensor 2: <span class="sensor" id="true">-----</span></p></div>
+                <div class="col-sm-4"><p class="wtext">Line Sensor 3: <span class="sensor" id="false">-----</span></p></div>
+            </div>
+            <!--Robot diagram-->
+            <svg id="robot-diagram" width="332" height="450">
+                <rect x="75" y="360" width="230" height="40"></rect>
+                <rect x="85" y="370" width="210" height="40"></rect>
+                <!--Arm-->
+                <g id="robot-arm">
+                    <rect x="35" y="260" width="115" height="15"></rect>
+                    <rect x="35" y="220" width="15" height="40"></rect>
+                </g>
+                <!--Wheels-->
+                <circle cx="100" cy="410" r="21"></circle>
+                <circle cx="158" cy="410" r="21"></circle>
+                <circle cx="213" cy="410" r="21"></circle>
+                <circle cx="270" cy="410" r="21"></circle>
+                <!--Elevator-->
+                <rect id="elevator" x="148" y="200" width="20" height="200"></rect>
+                <!--Base-->
+                <rect x="60" y="380" width="250" height="30"></rect>
+                <text style="font-size: 1.35rem" id="team" x="185" y="402" text-anchor="middle">3506</text>
+            </svg>
+        </div>
     </article>
     <!-- The sidebar of the dashboard. Designed for smaller control elements like selection boxes and small buttons. -->
     <aside>
-        <!-- Example button which toggles /SmartDashboard/exampleValue NetworkTables value.
-            The <p> below then says the value. -->
-        <div id="example-section">
-            <button id="example-button">Change example value</button>
-            <p id="example-readout">Value is undefined</p>
-        </div>
         <!-- Autonomous selector -->
         <div class="select-container">
             <select id="auto-select">
-                <option>No auto modes found</option>
+                <option style="color: black">Generic Auto</option>
+                <option style="color: black">Not Generic Auto</option>
                 <!-- This gets populated by JS -->
             </select>
         </div>
         <div>
-            <p class="text-danger">Adjust arm height</p>
+            <!-- <p class="text-danger">Adjust wrist height</p> -->
+            <p style="color: #54B6E5">Adjust wrist height</p>
             <input id="arm-position" type="range" min="0" max="1200" value="770">
+        </div>
+        <div>
+            <!--Voltage-Diagram-->
+            <svg id="battery-voltage" style="size: auto">
+                <rect width="190" height="30" x="22" y="65" rx="2" ry="2"></rect>
+                <rect width="190" height="110" x="2" y="25" rx="5" ry="5"></rect>
+                <text x="65" y="95" style="font-size: 50px">???</text>
+            </svg>
         </div>
     </aside>
     <div id="login">
@@ -67,8 +96,8 @@
     <script src="ui.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- AngularJS -->
     <script type="text/javascript" src="vendor/angular-1.4.4/angular.min.js"></script>
