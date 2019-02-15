@@ -1,32 +1,33 @@
 {
-  "name": "YETI-Dashboard",
-  "version": "2.1.0",
-  "description": "Robot control dashboard boilerplate for FRC.",
+  "name": "yeti-dashboard",
+  "version": "0.3.0",
+  "description": "Driverstation dashboard for YETI Robotics.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . --platform=darwin --icon=images/yeti.icns --out dist/",
     "package-linux": "electron-packager . --platform=linux --icon=images/yeti.png --out dist/",
-    "package-win": "electron-packager . --platform=win32 --icon=images/yeti.ico --out dist/"
+    "package-win": "electron-packager . --platform=win32 --icon=images/yeti.ico --out dist/",
+    "dist": "electron-builder -w"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FRCDashboard/FRCDashboard"
+  "build": {
+    "appId": "org.yetirobotics.yeti-dashboard",
+    "productName": "YETI Dashboard",
+    "buildResources": "images",
+    "win": {
+      "target": "portable",
+      "icon": "yeti.ico"
+    }
   },
-  "author": "Erik Boesen",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/FRCDashboard/FRCDashboard/issues"
-  },
-  "homepage": "http://frcdashboard.github.io",
   "devDependencies": {
     "electron": "^1.7.12",
+    "electron-builder": "^20.38.5",
     "electron-packager": "^10.1.1"
   },
   "dependencies": {
-    "wpilib-nt-client": "^1.7.1",
     "bootstrap": "^4.1.2",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "wpilib-nt-client": "^1.7.1"
   }
 }
