@@ -32,8 +32,22 @@ let updateGyro = (key, value) => {
 };
 NetworkTables.addKeyListener('/SmartDashboard/drive/navx/yaw', updateGyro);
 
-// The following case is an example, for a robot with an arm at the front.
-NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
+// // The following case is an example, for a robot with an arm at the front.
+// NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
+//     // 0 is all the way back, 1200 is 45 degrees forward. We don't want it going past that.
+//     if (value > 1140) {
+//         value = 1140;
+//     }
+//     else if (value < 0) {
+//         value = 0;
+//     }
+//     var armAngle = value * 3 / 20 - 45;
+//     // Calculate visual rotation of arm
+//     // Rotate the arm in diagram to match real arm
+//     ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg`;
+// });
+//The following case is an example, for a robot with an arm at the front.
+NetworkTables.addKeyListener('/SmartDashboard/elevator/encoder', (key, value) => {
     // 0 is all the way back, 1200 is 45 degrees forward. We don't want it going past that.
     if (value > 1140) {
         value = 1140;
@@ -41,16 +55,9 @@ NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
     else if (value < 0) {
         value = 0;
     }
-    // Calculate visual rotation of arm
-    var armAngle = value * 3 / 20 - 45;
+    var elevHeight = value * 3 / 20 - 45;
     // Rotate the arm in diagram to match real arm
-    ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg)`;
-});
-
-NetworkTables.addKeyListener('/robot/time', (key, value) => {
-    // This is an example of how a dashboard could display the remaining time in a match.
-    // We assume here that value is an integer representing the number of seconds left.
-    ui.timer.innerHTML = value < 0 ? '0:00' : Math.floor(value / 60) + ':' + (value % 60 < 10 ? '0' : '') + value % 60;
+    ui.robotDiagram.arm.style.transform = `translateY(${elevHeight})`;
 });
 
 // Load list of prewritten autonomous modes
@@ -93,6 +100,7 @@ ui.autoSelect.onchange = function() {
 // Get value of arm height slider when it's adjusted
 ui.armPosition.oninput = function() {
     NetworkTables.putValue('/SmartDashboard/arm/encoder', parseInt(this.value));
+    NetworkTables.putValue('/SmartDashboard/elevator/encoder', parseInt(this.value));
 };
 addEventListener('error',(ev)=>{
     ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})

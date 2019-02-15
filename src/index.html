@@ -10,7 +10,14 @@
 </head>
 
 <body>
-    <div id="timer">2:15</div>
+    <div>
+        <!--Voltage-Diagram-->
+        <svg id="battery-voltage" width="450" style="size: auto">
+            <rect width="190" height="30" x="150" y="55" rx="2" ry="2"></rect>
+            <rect width="190" height="110" x="130" y="15" rx="5" ry="5"></rect>
+            <text x="193" y="85" style="font-size: 50px">???</text>
+        </svg>
+    </div>
     <header>
         <!-- Tells whether robot is connected to dashboard. -->
         <div id="robot-state">Unknown state</div>
@@ -32,15 +39,19 @@
                         <text id="gyro-number" x="90" y="115">0º</text>
                     </svg>
                 </div>
-                <div class="col">
 
-                </div>
             </div>
-            <div class="row">
+            <!-- <div height="60px"></div> -->
+            <div class="btn-group btn-group-lg" aria-label="line-sensors" style="align: center">
+                <button type="button" class="btn btn-secondary btn-danger" id="Left">Left</button>
+                <button type="button" class="btn btn-secondary btn-success" id="Center">Center</button>
+                <button type="button" class="btn btn-secondary btn-danger" id="Right">Right</button>
+            </div>
+            <!-- <div class="row">
                 <div class="col-sm-4"><p class="wtext">Line Sensor 1: <span class="sensor" id="false">-----</span></p></div>
                 <div class="col-sm-4"><p class="wtext">Line Sensor 2: <span class="sensor" id="true">-----</span></p></div>
                 <div class="col-sm-4"><p class="wtext">Line Sensor 3: <span class="sensor" id="false">-----</span></p></div>
-            </div>
+            </div> -->
             <!--Robot diagram-->
             <svg id="robot-diagram" width="332" height="450">
                 <rect x="75" y="360" width="230" height="40"></rect>
@@ -77,14 +88,6 @@
             <!-- <p class="text-danger">Adjust wrist height</p> -->
             <p style="color: #54B6E5">Adjust wrist height</p>
             <input id="arm-position" type="range" min="0" max="1200" value="770">
-        </div>
-        <div>
-            <!--Voltage-Diagram-->
-            <svg id="battery-voltage" style="size: auto">
-                <rect width="190" height="30" x="22" y="65" rx="2" ry="2"></rect>
-                <rect width="190" height="110" x="2" y="25" rx="5" ry="5"></rect>
-                <text x="65" y="95" style="font-size: 50px">???</text>
-            </svg>
         </div>
     </aside>
     <div id="login">

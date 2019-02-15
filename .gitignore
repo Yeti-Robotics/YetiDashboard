@@ -64,3 +64,4 @@ dist/
 package-lock.json
 .DS_Store
 .vscode/
+src/pynetworktables2js.exe
