@@ -1,5 +1,7 @@
-Install node
+Install yarn
 
-Run npm install
+Run `yarn install` to install dependencies
 
-Run npm start
+Run `yarn start` to test locally
+
+Run `yarn dist` to package into a .exe
