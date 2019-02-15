@@ -52,6 +52,14 @@ function setLogin() {
   address.focus();
   address.setSelectionRange(8, 12);
 }
+function autoLogin() {
+  address.value = 'localhost';
+  ipc.send('connect', address.value);
+  address.disabled = connect.disabled = true;
+  connect.textContent = 'Connecting to ' + address.value + '...';
+  connect.click();
+}
+
 // On click try to connect and disable the input and the button
 connect.onclick = () => {
   ipc.send('connect', address.value);
@@ -68,4 +76,4 @@ address.onkeydown = ev => {
 
 // Show login when starting
 document.body.classList.toggle('login', true);
-setLogin();
+autoLogin();
