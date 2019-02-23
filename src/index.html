@@ -84,11 +84,25 @@
                 <!-- This gets populated by JS -->
             </select>
         </div>
-        <div>
+        <div class="text-center">
             <p style="color: #54B6E5">Adjust elevator height</p>
             <input id="elevator-position" type="range" min="-60" max="100" value="0">
             <p style="color: #54B6E5">Adjust arm height</p>
-            <input id="arm-position" type="range" min="0" max="1200" value="770">
+            <input id="arm-position" type="range" min="0" max="1" value="770">
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn-lg btn-danger">Ball</button>
+            <svg>
+                <circle cx="105" cy="75" r="50"></circle>
+            </svg>
+        </div>
+        <div>
+            <svg>
+                <g id="vision-target">
+                    <rect x="140" y="10" width="25" height="75" transform="rotate(-30)"></rect>
+                    <rect x="50" y="10" width="25" height="75" transform="rotate(30)"></rect>
+                </g>
+            </svg>
         </div>
     </aside>
     <div id="login">

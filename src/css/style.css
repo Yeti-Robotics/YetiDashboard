@@ -163,3 +163,11 @@ body.login #login {
 span {
     color: #333;
 }
+.sensortrue>rect {
+    stroke: green;
+    fill: green;
+}
+.sensorfalse>rect {
+    stroke: red;
+    fill: red;
+}

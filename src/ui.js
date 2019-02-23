@@ -15,7 +15,8 @@ let ui = {
     },
     autoSelect: document.getElementById('auto-select'),
     armPosition: document.getElementById('arm-position'),
-    elevatorPosition: document.getElementById('elevator-position')
+    elevatorPosition: document.getElementById('elevator-position'),
+    visionTarget: document.getElementById('vision-target')
 };
 
 // Key Listeners
@@ -36,13 +37,13 @@ NetworkTables.addKeyListener('/SmartDashboard/drive/navx/yaw', updateGyro);
 // // The following case is an example, for a robot with an arm at the front.
 NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
     // 0 is all the way back, 1200 is 45 degrees forward. We don't want it going past that.
-    if (value > 1140) {
-        value = 1140;
+    if (value >= 1) {
+        value = 90;
     }
-    else if (value < 0) {
-        value = 0;
+    else if (value <= 0) {
+        value = -25;
     }
-    var armAngle = value * 3 / 20 - 45;
+    var armAngle = value;
     // Calculate visual rotation of arm
     // Rotate the arm in diagram to match real arm
     ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg`;
@@ -80,6 +81,17 @@ NetworkTables.addKeyListener('/SmartDashboard/autonomous/modes', (key, value) =>
 // Load list of prewritten autonomous modes
 NetworkTables.addKeyListener('/SmartDashboard/autonomous/selected', (key, value) => {
     ui.autoSelect.value = value;
+});
+
+// Load list of prewritten autonomous modes
+NetworkTables.addKeyListener('/SmartDashboard/vision/targetFound', (key, value) => {
+    if (value) {
+        ui.visionTarget.classList.add('sensortrue')
+        ui.visionTarget.classList.remove('sensorfalse')
+    } else {
+        ui.visionTarget.classList.add('sensorfalse')
+        ui.visionTarget.classList.remove('sensortrue')
+    }
 });
 
 // // The rest of the doc is listeners for UI elements being clicked on
