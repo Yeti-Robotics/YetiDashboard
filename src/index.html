@@ -41,17 +41,16 @@
                 </div>
 
             </div>
-            <!-- <div height="60px"></div> -->
-            <div class="btn-group btn-group-lg" aria-label="line-sensors" style="align: center">
-                <button type="button" class="btn btn-secondary btn-danger" id="Left">Left</button>
-                <button type="button" class="btn btn-secondary btn-success" id="Center">Center</button>
-                <button type="button" class="btn btn-secondary btn-danger" id="Right">Right</button>
+            <div id="title">
+                <h1>Line Following Sensors</h1>
             </div>
-            <!-- <div class="row">
-                <div class="col-sm-4"><p class="wtext">Line Sensor 1: <span class="sensor" id="false">-----</span></p></div>
-                <div class="col-sm-4"><p class="wtext">Line Sensor 2: <span class="sensor" id="true">-----</span></p></div>
-                <div class="col-sm-4"><p class="wtext">Line Sensor 3: <span class="sensor" id="false">-----</span></p></div>
-            </div> -->
+            <div class="d-flex" >
+                <div class="btn-group btn-group-lg" aria-label="line-sensors">
+                    <button type="button" class="btn btn-secondary btn-danger" id="Left">Left</button>
+                    <button type="button" class="btn btn-secondary btn-success" id="Center">Center</button>
+                    <button type="button" class="btn btn-secondary btn-danger" id="Right">Right</button>
+                </div>
+            </div>
             <!--Robot diagram-->
             <svg id="robot-diagram" width="332" height="450">
                 <rect x="75" y="360" width="230" height="40"></rect>
@@ -85,22 +84,18 @@
             </select>
         </div>
         <div class="text-center">
-            <p style="color: #54B6E5">Adjust elevator height</p>
-            <input id="elevator-position" type="range" min="-60" max="100" value="0">
-            <p style="color: #54B6E5">Adjust arm height</p>
-            <input id="arm-position" type="range" min="0" max="1" value="770">
-        </div>
-        <div class="text-center">
-            <button type="button" class="btn-lg btn-danger">Ball</button>
+            <button type="button" class="btn-lg btn-danger" id="ball">Ball</button>
             <svg>
                 <circle cx="105" cy="75" r="50"></circle>
             </svg>
         </div>
         <div>
             <svg>
+
                 <g id="vision-target">
-                    <rect x="140" y="10" width="25" height="75" transform="rotate(-30)"></rect>
-                    <rect x="50" y="10" width="25" height="75" transform="rotate(30)"></rect>
+                    <text x="23" y="25" style="font-size: 25px">Vision Target</text>
+                    <rect x="140" y="50" width="25" height="75" transform="rotate(-30)"></rect>
+                    <rect x="50" y="50" width="25" height="75" transform="rotate(30)"></rect>
                 </g>
             </svg>
         </div>

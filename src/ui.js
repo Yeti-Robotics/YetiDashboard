@@ -10,13 +10,23 @@ let ui = {
         arm: document.getElementById('gyro-arm'),
         number: document.getElementById('gyro-number')
     },
+    lineFollowingButtons: {
+        leftSensor: document.getElementById('Left'),
+        midSensor: document.getElementById('Center'),
+        rightSensor: document.getElementById('Right')
+    },
     robotDiagram: {
-        arm: document.getElementById('robot-arm')
+        arm: {
+            element:  document.getElementById('robot-arm'),
+            elevatorHeight: 0,
+            armAngle: 0
+        }
     },
     autoSelect: document.getElementById('auto-select'),
     armPosition: document.getElementById('arm-position'),
     elevatorPosition: document.getElementById('elevator-position'),
-    visionTarget: document.getElementById('vision-target')
+    visionTarget: document.getElementById('vision-target'),
+    ballIndicator: document.getElementById('ball')
 };
 
 // Key Listeners
@@ -44,9 +54,11 @@ NetworkTables.addKeyListener('/SmartDashboard/arm/encoder', (key, value) => {
         value = -25;
     }
     var armAngle = value;
-    // Calculate visual rotation of arm
-    // Rotate the arm in diagram to match real arm
-    ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg`;
+    // // Calculate visual rotation of arm
+    // // Rotate the arm in diagram to match real arm
+    // ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg`;
+    ui.robotDiagram.arm.armAngle = armAngle;
+    updateRobotDiagram(ui.robotDiagram.arm.elevatorHeight, ui.robotDiagram.arm.armAngle);
 });
 //The following case is an example, for a robot with an arm at the front.
 NetworkTables.addKeyListener('/SmartDashboard/elevator/encoder', (key, value) => {
@@ -58,8 +70,10 @@ NetworkTables.addKeyListener('/SmartDashboard/elevator/encoder', (key, value) =>
         value = -60;
     }
     // var elevHeight = value * 3 / 20 - 45;
-    // Rotate the arm in diagram to match real arm
-    ui.robotDiagram.arm.style.transform = `translateY(${value}px)`;
+    // // Rotate the arm in diagram to match real arm
+    // ui.robotDiagram.arm.style.transform = `translateY(${value}px)`;
+    ui.robotDiagram.arm.elevatorHeight = value;
+    updateRobotDiagram(ui.robotDiagram.arm.elevatorHeight, ui.robotDiagram.arm.armAngle);
 });
 
 // Load list of prewritten autonomous modes
@@ -83,7 +97,7 @@ NetworkTables.addKeyListener('/SmartDashboard/autonomous/selected', (key, value)
     ui.autoSelect.value = value;
 });
 
-// Load list of prewritten autonomous modes
+// Shows if vision system has found target
 NetworkTables.addKeyListener('/SmartDashboard/vision/targetFound', (key, value) => {
     if (value) {
         ui.visionTarget.classList.add('sensortrue')
@@ -91,6 +105,50 @@ NetworkTables.addKeyListener('/SmartDashboard/vision/targetFound', (key, value) 
     } else {
         ui.visionTarget.classList.add('sensorfalse')
         ui.visionTarget.classList.remove('sensortrue')
+    }
+});
+
+// Left Line Following Indicator
+NetworkTables.addKeyListener('/SmartDashboard/lineFollower/left', (key, value) => {
+    if (value) {
+        ui.leftSensor.classList.add('btn-success')
+        ui.leftSensor.classList.remove('btn-danger')
+    } else {
+        ui.leftSensor.classList.add('btn-danger')
+        ui.leftSensor.classList.remove('btn-success')
+    }
+});
+
+// Center Line Following Indicator
+NetworkTables.addKeyListener('/SmartDashboard/lineFollower/center', (key, value) => {
+    if (value) {
+        ui.midSensor.classList.add('btn-success')
+        ui.midSensor.classList.remove('btn-danger')
+    } else {
+        ui.midSensor.classList.add('btn-danger')
+        ui.midSensor.classList.remove('btn-success')
+    }
+});
+
+// Right Line Following Indicator
+NetworkTables.addKeyListener('/SmartDashboard/lineFollower/right', (key, value) => {
+    if (value) {
+        ui.rightSensor.classList.add('btn-success')
+        ui.rightSensor.classList.remove('btn-danger')
+    } else {
+        ui.rightSensor.classList.add('btn-danger')
+        ui.rightSensor.classList.remove('btn-success')
+    }
+});
+
+// Ball Indicator
+NetworkTables.addKeyListener('/SmartDashboard/arm/ball', (key, value) => {
+    if (value) {
+        ui.ballIndicator.classList.add('btn-success')
+        ui.ballIndicator.classList.remove('btn-danger')
+    } else {
+        ui.ballIndicator.classList.add('btn-danger')
+        ui.ballIndicator.classList.remove('btn-success')
     }
 });
 
@@ -121,3 +179,6 @@ ui.elevatorPosition.oninput = function() {
 addEventListener('error',(ev)=>{
     ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})
 })
+function updateRobotDiagram (elevatorHeight, armAngle) {
+    ui.robotDiagram.arm.element.style.transform = `translateY(${elevatorHeight}px) rotate(${armAngle}deg`;
+}
