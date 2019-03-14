@@ -162,11 +162,11 @@ body.login #login {
 span {
     color: #333;
 }
-.sensortrue>rect {
+.sensortrue>rect, .sensortrue>circle {
     stroke: green;
     fill: green;
 }
-.sensorfalse>rect {
+.sensorfalse>rect, .sensorfalse>circle {
     stroke: red;
     fill: red;
 }

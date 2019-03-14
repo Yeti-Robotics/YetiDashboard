@@ -42,27 +42,20 @@ function onRobotConnection(connected) {
     setLogin();
   }
 }
+
 function setLogin() {
   // Add Enter key handler
   // Enable the input and the button
   address.disabled = connect.disabled = false;
   connect.textContent = 'Connect';
   // Add the default address and select xxxx
-  address.value = '10.35.6.2';
+  address.value = 'roborio-3506-frc.local';
   address.focus();
   address.setSelectionRange(8, 12);
 }
-function autoLogin() {
-  address.value = 'localhost';
-  ipc.send('connect', address.value);
-  address.disabled = connect.disabled = true;
-  connect.textContent = 'Connecting to ' + address.value + '...';
-  connect.click();
-}
-
 // On click try to connect and disable the input and the button
 connect.onclick = () => {
-  ipc.send('connect', address.value);
+  ipc.send('connect', address.value, 1735);
   address.disabled = connect.disabled = true;
   connect.textContent = 'Connecting...';
 };
@@ -76,4 +69,4 @@ address.onkeydown = ev => {
 
 // Show login when starting
 document.body.classList.toggle('login', true);
-autoLogin();
+setLogin();

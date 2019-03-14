@@ -2,14 +2,25 @@ let ipc = require('electron').ipcRenderer;
 
 var NetworkTables =
     (() => {
-        let keys = {}, connectionListeners = [], connected = false, globalListeners = [], keyListeners = {}, robotAddress = '127.0.0.1';
+        let keys = {},
+            connectionListeners = [],
+            connected = false,
+            globalListeners = [],
+            keyListeners = {},
+            robotAddress = '127.0.0.1';
         ipc.send('ready');
         ipc.on('connected', (ev, con) => {
             connected = con;
             connectionListeners.map(e => e(con));
         });
         ipc.on('add', (ev, mesg) => {
-            keys[mesg.key] = { val: mesg.val, valType: mesg.valType, id: mesg.id, flags: mesg.flags, new: true };
+            keys[mesg.key] = {
+                val: mesg.val,
+                valType: mesg.valType,
+                id: mesg.id,
+                flags: mesg.flags,
+                new: true
+            };
             globalListeners.map(e => e(mesg.key, mesg.val, true));
             if (globalListeners.length > 0)
                 keys[mesg.key].new = false;
@@ -58,10 +69,13 @@ var NetworkTables =
                 return this._[d3_map_escape(key)] = value;
             };
         };
-        var d3_map_proto = '__proto__', d3_map_zero = '\x00';
+        var d3_map_proto = '__proto__',
+            d3_map_zero = '\x00';
+
         function d3_map_escape(key) {
             return (key += '') === d3_map_proto || key[0] === d3_map_zero ? d3_map_zero + encodeURIComponent(key) : encodeURIComponent(key);
         }
+
         function d3_map_unescape(key) {
             return (key += '')[0] === d3_map_zero ? decodeURIComponent(key.slice(1)) : decodeURIComponent(key);
         }
@@ -74,7 +88,7 @@ var NetworkTables =
              * @param {boolean} [immediateNotify] If true, the function will be immediately called with the current robot connection state
              */
             addRobotConnectionListener(f, immediateNotify) {
-                if(typeof f != 'function') return new Error('Invalid argument')
+                if (typeof f != 'function') return new Error('Invalid argument')
 
                 connectionListeners.push(f);
                 if (immediateNotify)
@@ -86,7 +100,7 @@ var NetworkTables =
              * @param {boolean} [immediateNotify] If true, the function will be immediately called with the current value of all keys
              */
             addGlobalListener(f, immediateNotify) {
-                if(typeof f != 'function') return new Error('Invalid argument')
+                if (typeof f != 'function') return new Error('Invalid argument')
 
                 globalListeners.push(f);
                 if (immediateNotify) {
@@ -103,12 +117,11 @@ var NetworkTables =
              * @param {boolean} [immediateNotify] If true, the function will be immediately called with the current value of the specified key
              */
             addKeyListener(key, f, immediateNotify) {
-                if(typeof key != 'string' || typeof f != 'function') return new Error('Valid Arguments are (string, function)')
+                if (typeof key != 'string' || typeof f != 'function') return new Error('Valid Arguments are (string, function)')
 
                 if (typeof keyListeners[key] != 'undefined') {
                     keyListeners[key].push(f);
-                }
-                else {
+                } else {
                     keyListeners[key] = [f];
                 }
                 if (immediateNotify && key in keys) {
@@ -122,7 +135,7 @@ var NetworkTables =
              * @returns true if a key is present in NetworkTables, false otherwise
              */
             containsKey(key) {
-                if(typeof f != 'string') return false
+                if (typeof f != 'string') return false
                 return key in keys;
             },
             /**
@@ -139,12 +152,11 @@ var NetworkTables =
              * @returns value of key if present, undefined or defaultValue otherwise
              */
             getValue(key, defaultValue) {
-                if(typeof key != 'string') return new Error('Invalid Argument')
+                if (typeof key != 'string') return new Error('Invalid Argument')
 
                 if (typeof keys[key] != 'undefined') {
                     return keys[key].val;
-                }
-                else {
+                } else {
                     return defaultValue;
                 }
             },
@@ -167,14 +179,22 @@ var NetworkTables =
              * @returns True if the websocket is open, False otherwise
              */
             putValue(key, value) {
-                if(typeof key != 'string') return new Error('Invalid Argument')
+                if (typeof key != 'string') return new Error('Invalid Argument')
 
                 if (typeof keys[key] != 'undefined') {
                     keys[key].val = value;
-                    ipc.send('update', { key, val: value, id: keys[key].id, flags: keys[key].flags });
-                }
-                else {
-                    ipc.send('add', { key, val: value, flags: 0 });
+                    ipc.send('update', {
+                        key,
+                        val: value,
+                        id: keys[key].id,
+                        flags: keys[key].flags
+                    });
+                } else {
+                    ipc.send('add', {
+                        key,
+                        val: value,
+                        flags: 0
+                    });
                 }
                 return connected;
             },

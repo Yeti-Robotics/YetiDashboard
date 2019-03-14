@@ -1,5 +1,7 @@
 'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
 const electron = require('electron');
 const wpilib_NT = require('wpilib-nt-client');
@@ -40,6 +42,7 @@ let clientDataListener = (key, val, valType, mesgType, id, flags) => {
         flags
     });
 };
+
 function createWindow() {
     // Attempt to connect to the localhost
     client.start((con, err) => {
@@ -101,7 +104,7 @@ function createWindow() {
         // It's best if the dashboard takes up as much space as possible without covering the DriverStation application.
         // The window is closed until the python server is ready
         show: false,
-        icon: __dirname + '/../images/yeti.png'
+        icon: __dirname + '/../images/icon.png'
     });
     // Move window to top (left) of screen.
     mainWindow.setPosition(0, 0);
